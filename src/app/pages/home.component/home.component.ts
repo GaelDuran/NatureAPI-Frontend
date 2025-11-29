@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { PlaceService } from '../../core/services/place.service';
 import { Place } from '../../core/models/place.model';
-import * as mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
@@ -20,10 +20,9 @@ export class HomeComponent implements AfterViewInit {
   constructor(private placeService: PlaceService) {}
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.initMap();
-      this.loadPlaces();
-    }, 0);
+    mapboxgl.accessToken = environment.MAPBOX_TOKEN; // ⬅️ AGREGA ESTO
+    this.initMap();
+    this.loadPlaces();
   }
 
   initMap(): void {
@@ -31,8 +30,7 @@ export class HomeComponent implements AfterViewInit {
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-102.5528, 23.6345],
-      zoom: 5,
-      accessToken: environment.MAPBOX_TOKEN as any
+      zoom: 5
     });
   }
 
