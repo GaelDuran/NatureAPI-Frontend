@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PlaceService } from '../../core/services/place.service';
 import { Place } from '../../core/models/place.model';
 import { Photo } from '../../core/models/photo.model';
-import * as mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl'; 
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
