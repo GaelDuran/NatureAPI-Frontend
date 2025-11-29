@@ -21,16 +21,17 @@ export class HomeComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     mapboxgl.accessToken = environment.MAPBOX_TOKEN;
-    this.initMap();
-    this.loadPlaces();
-  }
 
-  initMap(): void {
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-102.5528, 23.6345],
       zoom: 5
+    });
+
+    // 👇 ESPERAR A QUE EL MAPA SE CARGUE
+    this.map.on('load', () => {
+      this.loadPlaces();
     });
   }
 
@@ -46,11 +47,11 @@ export class HomeComponent implements AfterViewInit {
       if (!place.longitude || !place.latitude) return;
 
       new mapboxgl.Marker()
-        .setLngLat([place.longitude, place.latitude])
+        .setLngLat([Number(place.longitude), Number(place.latitude)])
         .setPopup(
           new mapboxgl.Popup().setHTML(`
-          <b>${place.name}</b><br>${place.category}
-        `)
+            <b>${place.name}</b><br>${place.category}
+          `)
         )
         .addTo(this.map);
     });
