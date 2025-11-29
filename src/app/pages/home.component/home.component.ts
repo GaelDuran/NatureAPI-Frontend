@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { PlaceService } from '../../core/services/place.service';
 import { Place } from '../../core/models/place.model';
-declare var mapboxgl: any;
+import * as mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
