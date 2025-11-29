@@ -20,7 +20,7 @@ export class HomeComponent implements AfterViewInit {
   constructor(private placeService: PlaceService) {}
 
   ngAfterViewInit(): void {
-    (mapboxgl as any).accessToken = environment.MAPBOX_TOKEN;
+    mapboxgl.accessToken = environment.MAPBOX_TOKEN;
     this.initMap();
     this.loadPlaces();
   }
@@ -47,9 +47,11 @@ export class HomeComponent implements AfterViewInit {
 
       new mapboxgl.Marker()
         .setLngLat([place.longitude, place.latitude])
-        .setPopup(new mapboxgl.Popup().setHTML(`
+        .setPopup(
+          new mapboxgl.Popup().setHTML(`
           <b>${place.name}</b><br>${place.category}
-        `))
+        `)
+        )
         .addTo(this.map);
     });
   }
