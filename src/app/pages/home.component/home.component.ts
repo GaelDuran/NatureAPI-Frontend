@@ -26,6 +26,9 @@ export class HomeComponent implements AfterViewInit {
   }
 
   initMap(): void {
+
+    console.log('TOKEN:', environment.MAPBOX_TOKEN);
+
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
