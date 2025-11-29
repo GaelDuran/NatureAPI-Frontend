@@ -22,26 +22,38 @@ export class HomeComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initMap();
     this.loadPlaces();
+    setTimeout(() => this.map?.resize(), 200);
   }
 
   initMap(): void {
+    mapboxgl.accessToken = environment.MAPBOX_TOKEN;
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-102.5528, 23.6345],
       zoom: 5,
-      accessToken: environment.MAPBOX_TOKEN
+      
+    });
+
+    this.map.on('load', () => {
+      // Si las places ya están cargadas, añadir marcadores ahora
+      if (this.places.length) {
+        this.addMarkers();
+      }
     });
   }
 
   loadPlaces(): void {
     this.placeService.getPlaces().subscribe(data => {
       this.places = data;
-      this.addMarkers();
+      if (this.map && this.map.isStyleLoaded && this.map.isStyleLoaded()) {
+        this.addMarkers();
+      }
     });
   }
 
   addMarkers(): void {
+     if (!this.map) return;
     this.places.forEach(place => {
       new mapboxgl.Marker()
         .setLngLat([place.longitude, place.latitude])
