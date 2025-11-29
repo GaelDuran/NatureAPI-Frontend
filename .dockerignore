@@ -1,0 +1,13 @@
+node_modules
+dist
+.tmp
+ 
+*.log
+ 
+src/environments/secret.env.ts
+ 
+.git
+.gitignore
+.github
+.DS_Store
+ 

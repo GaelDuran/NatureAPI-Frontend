@@ -1,0 +1,48 @@
+<div class="place-detail-container" *ngIf="place">
+
+  <h1>{{ place.name }}</h1>
+  <p><strong>Categoría:</strong> {{ place.category }}</p>
+  <p><strong>Descripción:</strong> {{ place.description }}</p>
+  <p><strong>Coordenadas:</strong> {{ place.latitude }}, {{ place.longitude }}</p>
+  <p><strong>Altitud:</strong> {{ place.elevationMeters }} m</p>
+  <p><strong>Accesible:</strong> {{ place.accessible ? 'Sí' : 'No' }}</p>
+  <p><strong>Cuota de entrada:</strong> ${{ place.entryFee }}</p>
+  <p><strong>Horario:</strong> {{ place.openingHours }}</p>
+
+  <hr>
+
+  <h3>🖼️ Galería de fotos</h3>
+  <div class="gallery">
+    <img *ngFor="let photo of place.photos" [src]="photoSrc(photo)" [alt]="photo.description" />
+  </div>
+
+  <h3>🏕️ Amenidades</h3>
+  <div class="amenities">
+    <span class="chip" *ngFor="let a of place.amenities">{{ a.name }}</span>
+  </div>
+
+  <h3>🥾 Senderos</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Distancia (km)</th>
+        <th>Dificultad</th>
+        <th>Tiempo (min)</th>
+        <th>Loop</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of place.trails">
+        <td>{{ t.name }}</td>
+        <td>{{ t.distanceKm }}</td>
+        <td>{{ t.difficulty }}</td>
+        <td>{{ t.estimatedTimeMinutes }}</td>
+        <td>{{ t.isLoop ? 'Sí' : 'No' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>🗺️ Ubicación</h3>
+  <div id="mini-map" style="height: 300px; border-radius: 10px;"></div>
+</div>

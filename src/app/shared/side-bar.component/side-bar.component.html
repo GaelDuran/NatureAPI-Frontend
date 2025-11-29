@@ -1,0 +1,18 @@
+<nav class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-header">
+    <h2>🌿 NatureApp</h2>
+    <button (click)="toggleSidebar()">{{ isCollapsed ? '➡️' : '⬅️' }}</button>
+  </div>
+
+  <ul class="sidebar-menu">
+    <li>
+      <a routerLink="/home" routerLinkActive="active">🏠 Inicio</a>
+    </li>
+    <li>
+      <a routerLink="/places" routerLinkActive="active">📍 Lugares</a>
+    </li>
+    <li>
+      <a routerLink="/trails" routerLinkActive="active">🥾 Senderos</a>
+    </li>
+  </ul>
+</nav>

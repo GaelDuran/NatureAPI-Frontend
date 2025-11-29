@@ -1,0 +1,43 @@
+/* Trails list styling: more breathing room and readable table rows */
+.trails-container {
+	padding: 20px;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th, .table td {
+	padding: 12px 14px;
+	border-bottom: 1px solid #eee;
+}
+
+.table thead th {
+	font-weight: 600;
+	color: #222;
+}
+
+.table tbody tr {
+	transition: background-color 0.12s ease-in-out;
+}
+
+.table tbody tr:hover {
+	background-color: #fbfbfb;
+}
+
+.trail-badge {
+	display: inline-block;
+	padding: 6px 10px;
+	border-radius: 16px;
+	background: #f1f8e9;
+	color: #2e7d32;
+	font-weight: 600;
+	font-size: 0.9rem;
+}
+
+.empty-state {
+	padding: 24px;
+	color: #666;
+}
+

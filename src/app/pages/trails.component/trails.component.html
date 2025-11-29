@@ -1,0 +1,26 @@
+<div class="trails-container">
+  <h2>Senderos</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Distancia (km)</th>
+        <th>Dificultad</th>
+        <th>Tiempo estimado (min)</th>
+        <th>Loop</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trail of trails">
+        <td>{{ trail.name }}</td>
+        <td>{{ trail.distanceKm }}</td>
+        <td><span class="trail-badge">{{ trail.difficulty }}</span></td>
+        <td>{{ trail.estimatedTimeMinutes }}</td>
+        <td>{{ trail.isLoop ? 'Sí' : 'No' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="trails.length === 0" class="empty-state">No hay senderos para mostrar.</div>
+</div>
