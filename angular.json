@@ -13,6 +13,7 @@
             "tsConfig": "tsconfig.app.json",
             "outputPath": "dist/nature-api",
             "scripts": ["./node_modules/mapbox-gl/dist/mapbox-gl.js"],
+            "allowedCommonJsDependencies": ["mapbox-gl"],
             "assets": [
               {
                 "glob": "**/*",
