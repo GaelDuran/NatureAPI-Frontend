@@ -2,6 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { PlaceService } from '../../core/services/place.service';
 import { Place } from '../../core/models/place.model';
 import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
@@ -32,15 +33,33 @@ export class HomeComponent implements AfterViewInit {
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-102.5528, 23.6345],
       zoom: 5,
+      interactive: false
       
     });
 
     this.map.on('load', () => {
-      // Si las places ya están cargadas, añadir marcadores ahora
+      // activar interacciones que necesites
+      try {
+        this.map.scrollZoom.enable();
+        this.map.boxZoom.enable();
+        this.map.dragRotate?.enable?.();
+        this.map.dragPan.enable();
+        this.map.doubleClickZoom.enable();
+        this.map.touchZoomRotate.enable();
+
+      } catch (e) {
+        // ignore si no existen algunos controladores en la versión
+        console.warn('No se pudieron activar todas las interacciones', e);
+      }
+
+      this.map.resize(); // asegurar dimensiones correctas
       if (this.places.length) {
         this.addMarkers();
       }
     });
+
+    // registrar errores internos de Mapbox para depurar
+    this.map.on('error', (evt) => console.error('Mapbox error:', evt));
   }
 
   loadPlaces(): void {
