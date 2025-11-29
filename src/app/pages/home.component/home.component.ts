@@ -20,37 +20,36 @@ export class HomeComponent implements AfterViewInit {
   constructor(private placeService: PlaceService) {}
 
   ngAfterViewInit(): void {
-    setTimeout (() => {
+    (mapboxgl as any).accessToken = environment.MAPBOX_TOKEN;
     this.initMap();
     this.loadPlaces();
   }
-  , 0);
-  }
 
   initMap(): void {
-
-    (mapboxgl as any).accessToken = environment.MAPBOX_TOKEN;
-
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-102.5528, 23.6345],
-      zoom: 5,
+      zoom: 5
     });
   }
 
   loadPlaces(): void {
     this.placeService.getPlaces().subscribe(data => {
-      this.places = data;
+      this.places = data ?? [];
       this.addMarkers();
     });
   }
 
   addMarkers(): void {
     this.places.forEach(place => {
+      if (!place.longitude || !place.latitude) return;
+
       new mapboxgl.Marker()
         .setLngLat([place.longitude, place.latitude])
-        .setPopup(new mapboxgl.Popup().setHTML(`<b>${place.name}</b><br>${place.category}`))
+        .setPopup(new mapboxgl.Popup().setHTML(`
+          <b>${place.name}</b><br>${place.category}
+        `))
         .addTo(this.map);
     });
   }
