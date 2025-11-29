@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { PlaceService } from '../../core/services/place.service';
 import { Place } from '../../core/models/place.model';
-import * as mapboxgl from 'mapbox-gl';
+import mapboxgl from 'mapbox-gl';
 import { CommonModule } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment';
 export class HomeComponent implements AfterViewInit {
 
   places: Place[] = [];
-  map!: mapboxgl.default;
+  map!: mapboxgl.Map;
 
   constructor(private placeService: PlaceService) {}
 
@@ -25,12 +25,12 @@ export class HomeComponent implements AfterViewInit {
   }
 
   initMap(): void {
-    this.map = new (mapboxgl as any).Map({
+    this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-102.5528, 23.6345],
       zoom: 5,
-      accessToken: environment.MAPBOX_TOKEN as any
+      accessToken: environment.MAPBOX_TOKEN
     });
   }
 
@@ -43,9 +43,9 @@ export class HomeComponent implements AfterViewInit {
 
   addMarkers(): void {
     this.places.forEach(place => {
-      new (mapboxgl as any).Marker()
+      new mapboxgl.Marker()
         .setLngLat([place.longitude, place.latitude])
-        .setPopup(new (mapboxgl as any).Popup().setHTML(`<b>${place.name}</b><br>${place.category}`))
+        .setPopup(new mapboxgl.Popup().setHTML(`<b>${place.name}</b><br>${place.category}`))
         .addTo(this.map);
     });
   }
