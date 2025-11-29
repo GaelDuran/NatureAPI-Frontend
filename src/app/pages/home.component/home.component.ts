@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { PlaceService } from '../../core/services/place.service';
 import { Place } from '../../core/models/place.model';
 import mapboxgl from 'mapbox-gl';
@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit, OnDestroy {
 
   places: Place[] = [];
   map!: mapboxgl.Map;
@@ -29,10 +29,13 @@ export class HomeComponent implements AfterViewInit {
       zoom: 5
     });
 
-    // 👇 ESPERAR A QUE EL MAPA SE CARGUE
     this.map.on('load', () => {
       this.loadPlaces();
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.map) this.map.remove();
   }
 
   loadPlaces(): void {
@@ -47,7 +50,7 @@ export class HomeComponent implements AfterViewInit {
       if (!place.longitude || !place.latitude) return;
 
       new mapboxgl.Marker()
-        .setLngLat([Number(place.longitude), Number(place.latitude)])
+        .setLngLat([place.longitude, place.latitude])
         .setPopup(
           new mapboxgl.Popup().setHTML(`
             <b>${place.name}</b><br>${place.category}
