@@ -25,7 +25,7 @@ export class HomeComponent implements AfterViewInit {
   }
 
   initMap(): void {
-    this.map = new mapboxgl.Map({
+    this.map = new (mapboxgl as any).Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-102.5528, 23.6345],
