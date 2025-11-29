@@ -20,21 +20,22 @@ export class HomeComponent implements AfterViewInit {
   constructor(private placeService: PlaceService) {}
 
   ngAfterViewInit(): void {
-    mapboxgl.accessToken = environment.MAPBOX_TOKEN; // ⬅️ AGREGA ESTO
+    setTimeout (() => {
     this.initMap();
     this.loadPlaces();
+  }
+  , 0);
   }
 
   initMap(): void {
 
-    console.log('TOKEN:', environment.MAPBOX_TOKEN);
+    (mapboxgl as any).accessToken = environment.MAPBOX_TOKEN;
 
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v12',
       center: [-102.5528, 23.6345],
       zoom: 5,
-      accessToken: environment.MAPBOX_TOKEN as any
     });
   }
 
