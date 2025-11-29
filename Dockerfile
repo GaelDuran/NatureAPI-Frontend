@@ -18,7 +18,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copiar el build (Angular 17+)
-COPY --from=build /app/nature-api/dist/nature-api/browser /usr/share/nginx/html
+COPY --from=build /app/dist/nature-api/browser /usr/share/nginx/html
 
 
 # Copiar configuración de Nginx
