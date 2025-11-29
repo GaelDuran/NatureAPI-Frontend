@@ -37,8 +37,17 @@ export class HomeComponent implements AfterViewInit {
       
     });
 
+    const canvas = this.map.getCanvas();
+    if (canvas) {
+      canvas.style.pointerEvents = 'none';
+    }
+
     this.map.on('load', () => {
-      // activar interacciones que necesites
+      // reactivar pointer events y forzar resize
+      if (canvas) {
+        canvas.style.pointerEvents = '';
+      }
+
       try {
         this.map.scrollZoom.enable();
         this.map.boxZoom.enable();
@@ -46,22 +55,19 @@ export class HomeComponent implements AfterViewInit {
         this.map.dragPan.enable();
         this.map.doubleClickZoom.enable();
         this.map.touchZoomRotate.enable();
-
       } catch (e) {
-        // ignore si no existen algunos controladores en la versión
         console.warn('No se pudieron activar todas las interacciones', e);
       }
 
-      this.map.resize(); // asegurar dimensiones correctas
-      if (this.places.length) {
+      this.map.resize();
+      if (this.places.length && this.map.isStyleLoaded && this.map.isStyleLoaded()) {
         this.addMarkers();
       }
     });
 
-    // registrar errores internos de Mapbox para depurar
     this.map.on('error', (evt) => console.error('Mapbox error:', evt));
   }
-
+  
   loadPlaces(): void {
     this.placeService.getPlaces().subscribe(data => {
       this.places = data;
