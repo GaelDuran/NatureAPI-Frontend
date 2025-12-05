@@ -10,7 +10,9 @@ RUN npm install --force
 
 COPY . .
 
-RUN npm run create:secret-env
+RUN export API_URL=${API_URL} && \
+    export MAPBOX_TOKEN=${MAPBOX_TOKEN} && \
+    npm run create:secret-env
 
 RUN npm run build
 
