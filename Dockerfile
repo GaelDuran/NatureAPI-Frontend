@@ -3,9 +3,6 @@ FROM node:24-alpine AS build
 ARG API_URL
 ARG MAPBOX_TOKEN
 
-ENV API_URL=$API_URL
-ENV MAPBOX_TOKEN=$MAPBOX_TOKEN
-
 WORKDIR /app
 
 COPY package*.json ./
@@ -13,7 +10,8 @@ RUN npm install --force
 
 COPY . .
 
-RUN npm run create:secret-env
+# Pasar las variables directamente al comando
+RUN API_URL=${API_URL} MAPBOX_TOKEN=${MAPBOX_TOKEN} npm run create:secret-env
 
 RUN npm run build
 RUN rm -f .env
