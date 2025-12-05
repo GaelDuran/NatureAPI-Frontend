@@ -7,28 +7,37 @@
     <div class="table-wrapper">
         <table class="table">
             <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Categoría</th>
-                            <th>Altitud</th>
-                            <th>Accesible</th>
-                            <th>Cuota</th>
-                            <th>Acciones</th>
-                        </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Altitud</th>
+                    <th>Accesible</th>
+                    <th>Cuota</th>
+                    <th>Acciones</th>
+                </tr>
             </thead>
             <tbody>
-                        <tr *ngFor="let place of places">
-                            <td>{{ place.name }}</td>
-                            <td>{{ place.category }}</td>
-                            <td>{{ place.elevationMeters }} m</td>
-                            <td>{{ place.accessible ? 'Sí' : 'No' }}</td>
-                            <td>${{ place.entryFee }}</td>
-                            <td>
-                                <a class="btn-view" [routerLink]="['/places', place.id]">Ver</a>
-                            </td>
-                        </tr>
+                <tr *ngFor="let place of places">
+                    <td>{{ place.name }}</td>
+                    <td>{{ place.category }}</td>
+                    <td>{{ place.elevationMeters }} m</td>
+                    <td>{{ place.accessible ? 'Sí' : 'No' }}</td>
+                    <td>${{ place.entryFee }}</td>
+                    <td>
+                        <a class="btn-view" [routerLink]="['/places', place.id]">Ver</a>
+                        <button (click)="generateSummary(place)" class="btn-ia" style="margin-left: 5px;">Resumen IA</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- Mostrar resumen IA si existe -->
+    <div *ngIf="currentSummary" style="margin-top: 20px; padding: 15px; background-color: #f5f5f5; border-radius: 4px; border-left: 4px solid #1890ff;">
+        <h3>{{ currentPlace?.name }} - Resumen IA</h3>
+        <div *ngIf="summaryLoading" style="color: #666;">Generando resumen...</div>
+        <p *ngIf="!summaryLoading" style="white-space: pre-wrap;">{{ currentSummary }}</p>
+        <button (click)="closeSummary()" style="margin-top: 10px; padding: 5px 10px;">Cerrar</button>
     </div>
 
     <div *ngIf="!loading && !error && places.length === 0">No se encontraron lugares.</div>
