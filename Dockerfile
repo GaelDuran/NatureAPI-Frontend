@@ -7,8 +7,8 @@ RUN npm install --force
 
 COPY . .
 
-# Crear .env si no existe (necesario para el script)
-RUN npm run create:secret-env || true
+# Crear .env si no existe ANTES de ejecutar el script
+RUN npm run create:secret-env
 
 RUN npm run build
 RUN rm -f .env
