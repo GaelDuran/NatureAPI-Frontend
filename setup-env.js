@@ -11,3 +11,4 @@ export const MAPBOX_TOKEN = "${MAPBOX_TOKEN}";
 fs.writeFileSync("src/environments/secret.env.ts", content);
 
 console.log("secret.env.ts generado correctamente");
+
