@@ -8,13 +8,12 @@ RUN npm install --force
 
 COPY . .
 
-# Generar archivo secret.env.ts
-RUN node setup-env.js
+RUN npm run create:secret.env
 
-# Build de producción
 RUN npm run build
 
-# Etapa 2 – Servir con Nginx
+RUN rm.env
+
 FROM nginx:alpine
 
 # Copiar el build (Angular 17+)

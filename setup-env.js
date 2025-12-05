@@ -1,13 +1,21 @@
-const fs = require("fs");
+const path = require('path');
+const { writeFile } = require('fs').promises;
+require('dotenv').config();
 
-const API_URL = process.env.API_URL || "";
-const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN || "";
+const requireVars = ['API_URL', 'MAPBOX_TOKEN'];
+for (const v of requireVars) {
+    if (!process.env[v]) throw new Error(`${v} debe estar definido en el archivo .env`);
+}
 
-const content = `
-export const API_URL = "${API_URL}";
-export const MAPBOX_TOKEN = "${MAPBOX_TOKEN}";
-`;
+const fileName = 'secret.env.ts';
+const filePath = path.join(__dirname, 'src', 'environments', fileName);
 
-fs.writeFileSync("src/environments/secret.env.ts", content);
+// Generar contenido del archivo
+const content = `export const environment = {
+  apiUrl: '${process.env.API_URL}',
+  mapboxToken: '${process.env.MAPBOX_TOKEN}'
+};`;
 
-console.log("secret.env.ts generado correctamente");
+writeFile(filePath, content)
+  .then(() => console.log(`✓ ${fileName} creado exitosamente`))
+  .catch(err => console.error(`✗ Error creando ${fileName}:`, err));
