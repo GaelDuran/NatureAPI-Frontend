@@ -22,12 +22,12 @@ jobs:
         run: docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
  
       - name: Build Docker Image
-        run: docker build -t mariguapo/nature-api:${{ github.sha }} .
+        run: docker build -t mariguapo/nature-app:${{ github.sha }} .
  
       - name: Tag Latest
-        run: docker tag mariguapo/nature-api:${{ github.sha }} mariguapo/nature-api:latest
+        run: docker tag mariguapo/nature-app:${{ github.sha }} mariguapo/nature-app:latest
  
       - name: Push Docker Image
         run: |
-          docker push mariguapo/nature-api:${{ github.sha }}
-          docker push mariguapo/nature-api:latest
+          docker push mariguapo/nature-app:${{ github.sha }}
+          docker push mariguapo/nature-app:latest
