@@ -10,7 +10,7 @@ RUN npm run build
 RUN rm .env
 FROM nginx:alpine
  
-COPY --from=build /app/dist/nature-app/browser /usr/share/nginx/html
+COPY --from=build /app/dist/nature-api/browser /usr/share/nginx/html
  
 COPY nginx.conf /etc/nginx/nginx.conf
  
