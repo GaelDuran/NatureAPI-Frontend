@@ -4,6 +4,7 @@ import { Place } from '../../core/models/place.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PlaceSummaryComponent } from '../place-summary.component/place-summary.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-places',
@@ -48,7 +49,7 @@ export class PlacesComponent implements OnInit {
   this.currentSummary = '';
 
   // Usar GET en lugar de POST
-  fetch(`http://localhost:5268/api/Places/${place.id}/summary`, {
+  fetch(`${environment.API_URL}/Places/${place.id}/summary`, {
     method: 'GET'  // ← Cambiar de POST a GET
   })
     .then(response => {
